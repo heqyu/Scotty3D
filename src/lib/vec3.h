@@ -178,6 +178,10 @@ struct Vec3 {
 		return r;
 	}
 
+	bool approx_equal(const Vec3& o) const {
+		return eps::approx_equal<float,3>(data, o.data);
+	}
+
 	union {
 		struct {
 			float x;

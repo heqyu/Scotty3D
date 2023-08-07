@@ -6,6 +6,7 @@
 #include <ostream>
 
 #include "log.h"
+#include "epscmp.h"
 
 struct Vec2 {
 
@@ -155,6 +156,10 @@ struct Vec2 {
 		while (r.y < min) r.y += range;
 		while (r.y >= max) r.y -= range;
 		return r;
+	}
+
+	bool approx_equal(const Vec2& o) const {
+		return eps::approx_equal<float,2>(data, o.data);
 	}
 
 	union {

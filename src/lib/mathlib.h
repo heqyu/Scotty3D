@@ -3,9 +3,15 @@
 
 #include <algorithm>
 #include <cmath>
+#include "epscmp.h"
 
-template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
-template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
+template <class... Ts>
+struct overloaded : Ts...
+{
+	using Ts::operator()...;
+};
+template <class... Ts>
+overloaded(Ts...) -> overloaded<Ts...>;
 
 #include "line.h"
 #include "plane.h"
@@ -19,15 +25,20 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 #define Radians(v) ((v) * (PI_F / 180.0f))
 #define Degrees(v) ((v) * (180.0f / PI_F))
 
-template<typename T> T lerp(T start, T end, float t) {
+template <typename T>
+T lerp(T start, T end, float t)
+{
 	return start + (end - start) * t;
 }
 
-inline float sign(float x) {
-	return x > 0.0f ? 1.0f : x < 0.0f ? -1.0f : 0.0f;
+inline float sign(float x)
+{
+	return x > 0.0f ? 1.0f : x < 0.0f ? -1.0f
+									  : 0.0f;
 }
 
-inline float smoothstep(float e0, float e1, float x) {
+inline float smoothstep(float e0, float e1, float x)
+{
 	float t = std::clamp((x - e0) / (e1 - e0), 0.0f, 1.0f);
 	return t * t * (3.0f - 2.0f * t);
 }
@@ -36,3 +47,8 @@ inline float smoothstep(float e0, float e1, float x) {
 #include "mat4.h"
 #include "quat.h"
 #include "ray.h"
+
+inline bool approx_equal(Mat4 a, Mat4 b)
+{
+	return eps::approx_equal<float, 16>(a.data, b.data);
+}

@@ -8,6 +8,7 @@
 
 #include "log.h"
 #include "vec4.h"
+#include "epscmp.h"
 
 struct Mat4 {
 
@@ -57,6 +58,10 @@ struct Mat4 {
 	///  - points on the far 'plane' (z=-inf) map to points with z'/w'= 1.0
 	//   - objects are closer if their mapped depth is lower
 	static Mat4 perspective(float fov, float ar, float n);
+
+	bool approx_equal(const Mat4& o) const {
+		return eps::approx_equal<float,16>(data, o.data);
+	}
 
 	Mat4() {
 		*this = I;

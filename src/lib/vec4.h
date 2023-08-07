@@ -191,6 +191,10 @@ struct Vec4 {
 		return Vec3(x / w, y / w, z / w);
 	}
 
+	bool approx_equal(const Vec3& o) const {
+		return eps::approx_equal<float,3>(data, o.data);
+	}
+
 	union {
 		struct {
 			float x;
